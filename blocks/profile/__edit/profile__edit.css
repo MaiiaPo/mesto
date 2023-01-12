@@ -1,0 +1,13 @@
+.profile__edit {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  left: 5%;
+}
+
+@media screen and (min-width: 1280px) {
+  .profile__edit {
+    width: 24px;
+  height: 24px;
+  }
+}

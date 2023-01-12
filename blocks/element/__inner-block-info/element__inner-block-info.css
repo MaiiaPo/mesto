@@ -1,0 +1,7 @@
+.element__inner-block-info {
+  width: 246px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto;
+}
