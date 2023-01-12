@@ -13,4 +13,13 @@
     margin-left: auto;
     margin-top: 37px;
   }
+
+  .profile__add-button:hover {
+    cursor: pointer;
+    border-color: rgba(255, 255, 255, .6);
+  }
+
+  .profile__add-button:hover .profile__add-img {
+    fill: rgba(255, 255, 255, .6);
+  }
 }

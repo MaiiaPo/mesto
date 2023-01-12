@@ -1,0 +1,10 @@
+.element__like {
+  fill: #000;
+}
+
+@media screen and (min-width: 1280px) {
+  .element__like:hover {
+    cursor: pointer;
+    fill: rgba(0, 0, 0, .5);
+  }
+}
