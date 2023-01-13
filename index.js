@@ -47,6 +47,7 @@ function onClickLike() {
 
   likes.forEach((like) => {
     like.addEventListener('click', () => {
+      like.classList.toggle('element__like_light');
       like.classList.toggle('element__like_black');
     });
   });

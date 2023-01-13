@@ -1,11 +1,12 @@
 .element__like {
-  fill: #fff;
-  stroke: #000;
+  background-size: cover;
+  width: 22px;
+  height: 19px;
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1024px) {
   .element__like:hover {
     cursor: pointer;
-    stroke: rgba(0, 0, 0, .5);
+    opacity: .5;
   }
 }

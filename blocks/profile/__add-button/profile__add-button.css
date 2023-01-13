@@ -4,6 +4,9 @@
   width: 282px;
   min-height: 50px;
   margin-top: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media screen and (min-width: 768px) {
@@ -26,6 +29,6 @@
   }
 
   .profile__add-button:hover .profile__add-img {
-    fill: rgba(255, 255, 255, .6);
+    opacity: .6;
   }
 }
