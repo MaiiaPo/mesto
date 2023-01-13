@@ -3,9 +3,9 @@
 }
 
 .profile__edit:hover .profile__edit-border {
-  stroke: rgba(255, 255, 255, .6);;
+  stroke: rgba(255, 255, 255, .6);
 }
 
 .profile__edit:hover .profile__edit-img {
-  fill:  rgba(255, 255, 255, .6);;
+  fill:  rgba(255, 255, 255, .6);
 }
