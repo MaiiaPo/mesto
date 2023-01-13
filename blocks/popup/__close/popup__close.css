@@ -4,7 +4,8 @@
   position: relative;
   top: -38px;
   left: calc(282px - 20px);
-  fill: #fff;
+  background-image: url(../../../images/close.svg);
+  background-size: cover;
 }
 
 @media screen and (min-width: 1024px) {
@@ -16,6 +17,6 @@
   }
   .popup__close:hover {
     cursor: pointer;
-    fill: rgba(255, 255, 255, .6);
+    opacity: .6;
   }
 }
