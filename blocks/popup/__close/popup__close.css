@@ -1,0 +1,21 @@
+.popup__close {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: -38px;
+  left: calc(282px - 20px);
+  fill: #fff;
+}
+
+@media screen and (min-width: 1024px) {
+  .popup__close {
+    width: 32px;
+    height: 32px;
+    left: 438px;
+    top: -40px;
+  }
+  .popup__close:hover {
+    cursor: pointer;
+    fill: rgba(255, 255, 255, .6);;
+  }
+}

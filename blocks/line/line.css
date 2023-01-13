@@ -7,7 +7,7 @@
   margin: 0;
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 768px) {
   .line {
     max-width: 880px;
     margin: auto;
