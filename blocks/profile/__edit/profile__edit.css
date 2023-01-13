@@ -1,25 +1,11 @@
-.profile__edit {
-  position: relative;
-  width: 18px;
-  height: 18px;
-  left: 5%;
+.profile__edit:hover {
+  cursor: pointer;
 }
 
-@media screen and (min-width: 1024px) {
-  .profile__edit {
-    width: 24px;
-    height: 24px;
-  }
-  
-  .profile__edit:hover  {
-    cursor: pointer;
-  }
-  
-  .profile__edit:hover .profile__edit-border {
-    stroke: rgba(255, 255, 255, .6);
-  }
-  
-  .profile__edit:hover .profile__edit-img {
-    fill: rgba(255, 255, 255, .6);
-  }
+.profile__edit:hover .profile__edit-border {
+  stroke: rgba(255, 255, 255, .6);;
+}
+
+.profile__edit:hover .profile__edit-img {
+  fill:  rgba(255, 255, 255, .6);;
 }
