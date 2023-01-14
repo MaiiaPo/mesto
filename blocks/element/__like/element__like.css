@@ -1,12 +1,8 @@
 .element__like {
+  background-image: url(../../../images/like.svg);
   background-size: cover;
+  background-color: rgba(255, 255, 255, 1);
   width: 22px;
   height: 19px;
-}
-
-@media screen and (min-width: 1024px) {
-  .element__like:hover {
-    cursor: pointer;
-    opacity: .5;
-  }
+  border: none;
 }

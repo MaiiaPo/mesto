@@ -4,6 +4,10 @@
   text-align: center;
   padding-top: 8px;
   margin: 0;
+  text-overflow: ellipsis;
+  max-width: 230px;
+  overflow: hidden;
+  white-space: nowrap; 
 }
 
 @media screen and (min-width: 1024px) {
@@ -13,5 +17,6 @@
     text-align: start;
     padding-top: 6px;
     padding-left: 30px;
+    max-width: 400px;
   }
 }

@@ -6,4 +6,7 @@
   max-width: 100%;
   min-height: 79px;
   align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  margin: auto;
 }
