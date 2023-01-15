@@ -16,17 +16,18 @@ function fillFields() {
   inputDescription.value = profileDescription.textContent;
 }
 
-// При сохранении закрываем окно, если нет изменений
-// и изменяем значения в профиле, если есть изменения
-function onSavePopup() {
-  profileName.textContent = inputName.value;
-  profileDescription.textContent = inputDescription.value;
-  popup.classList.remove('popup_opened');
-}
-
 // Закрытие модального окна
 function closePopup() {
   popup.classList.remove('popup_opened');
+}
+
+// При сохранении закрываем окно, если нет изменений
+// и изменяем значения в профиле, если есть изменения
+function onSavePopup(event) {
+  event.preventDefault();
+  profileName.textContent = inputName.value;
+  profileDescription.textContent = inputDescription.value;
+  closePopup();
 }
 
 editButton.addEventListener('click', fillFields);

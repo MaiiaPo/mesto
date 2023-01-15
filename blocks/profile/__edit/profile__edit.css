@@ -2,17 +2,19 @@
   background-image: url(../../../images/edit.svg);
   background-size: contain;
   background-color: rgba(0, 0, 0, 1);
+  background-position: center;
+  background-repeat: no-repeat;
   border: none;
-  position: relative;
   width: 18px;
   height: 18px;
-  left: 5%;
+  padding-left: 30px;
 }
 
 @media screen and (min-width: 1024px) {
   .profile__edit {
     width: 24px;
     height: 24px;
+    padding-left: 50px;
   }
 }
 
