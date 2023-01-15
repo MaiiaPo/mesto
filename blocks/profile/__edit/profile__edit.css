@@ -1,9 +1,6 @@
 .profile__edit {
-  background-image: url(../../../images/edit.svg);
-  background-size: contain;
+  background: url(../../../images/edit.svg) center/contain no-repeat;
   background-color: rgba(0, 0, 0, 1);
-  background-position: center;
-  background-repeat: no-repeat;
   border: none;
   width: 18px;
   height: 18px;
