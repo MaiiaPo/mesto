@@ -30,61 +30,19 @@
         <button class="profile__add-button link" type="button" aria-label="Добавить"></button>
       </section>
       <!-- Elements -->
-      <section class="elements" aria-label="Места">
-        <article class="element">
-          <img class="element__image" src="./images/karachaevsc.jpg" alt="Карачаевск">
-          <div class="element__info">
-            <h2 class="element__title">Карачаевск</h2>
-            <button class="element__like" type="button" aria-label="Нравится"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img class="element__image" src="./images/elbrus.jpg" alt="Эльбрус">
-          <div class="element__info">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button class="element__like" type="button" aria-label="Нравится"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img class="element__image" src="./images/dombay.jpg" alt="Домбай">
-          <div class="element__info">
-            <h2 class="element__title">Домбай</h2>
-            <button class="element__like" type="button" aria-label="Нравится"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img class="element__image" src="./images/elbrus.jpg" alt="Эльбрус">
-          <div class="element__info">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button class="element__like" type="button" aria-label="Нравится"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img class="element__image" src="./images/dombay.jpg" alt="Домбай">
-          <div class="element__info">
-            <h2 class="element__title">Домбай</h2>
-            <button class="element__like" type="button" aria-label="Нравится"></button>
-          </div>
-        </article>
-        <article class="element">
-          <img class="element__image" src="./images/karachaevsc.jpg" alt="Карачаевск">
-          <div class="element__info">
-            <h2 class="element__title">Карачаево-Черкессия</h2>
-            <button class="element__like" type="button" aria-label="Нравится"></button>
-          </div>
-        </article>
-      </section>
+      <section class="elements" aria-label="Места"></section>
     </main>
     <!-- FOOTER -->
     <footer class="footer">
       <p class="footer__copyright" lang="en">&copy; 2022 Mesto Russia</p>
     </footer>
     <!-- POPUP -->
-    <div class="popup">
+    <!-- edit -->
+    <div class="popup popup_edit">
       <div class="popup__container">
-        <button class="popup__close link" type="button" aria-label="Закрыть"></button>
+        <button class="popup__close popup_edit link" type="button" aria-label="Закрыть"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form name="profile" class="popup__form">
+        <form name="profile" class="popup__form popup_edit">
           <input 
             type="text" 
             name="name" 
@@ -103,7 +61,53 @@
         </form>
       </div>
     </div>
+    <!-- add -->
+    <div class="popup popup_add">
+      <div class="popup__container">
+        <button class="popup__close popup_add link" type="button" aria-label="Закрыть"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form name="place" class="popup__form popup_add">
+          <input 
+            type="text" 
+            name="name-place" 
+            placeholder="Название" 
+            class="popup__input-text popup__input-text_type_name-place" 
+            required
+          >
+          <input
+            type="text" 
+            name="link" 
+            placeholder="Ссылка на картинку" 
+            class="popup__input-text popup__input-text_type_link" 
+            required
+          >
+          <input type="submit" value="Сохранить" class="popup__submit-btn">
+        </form>
+      </div>
+    </div>
+    <!-- image -->
+    <div class="popup popup_image">
+      <div class="full">
+        <button class="popup__close popup_image link" type="button" aria-label="Закрыть"></button>
+        <figure class="figure">
+          <img class="full__image" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg">
+          <figcaption class="full__caption">ваша полка — верхняя</figcaption>
+        </figure>
+      </div>
+    </div>
   </div>
+</div>
+  <!-- TEMPLATE -->
+  <template id="element">
+    <article class="element">
+      <button class="element__delete" type="button" aria-label="Удалить"></button>
+      <img class="element__image">
+      <div class="element__info">
+        <h2 class="element__title"></h2>
+        <button class="element__like" type="button" aria-label="Нравится"></button>
+      </div>
+    </article>
+  </template>
   <script src="./scripts/index.js"></script>
 </body>
 </html>
