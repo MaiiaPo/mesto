@@ -26,7 +26,7 @@ const initialCards = [
 ];
 const elements = document.querySelector('.elements');
 
-const popupEdit = document.querySelector('.popup_edit');
+const popupEdit = document.querySelector('.popup__edit');
 const formEdit = document.querySelector('.popup__form.popup_edit');
 const closeEdit = document.querySelector('.popup__close.popup_edit');
 const editButton = document.querySelector('.profile__edit');
@@ -36,7 +36,7 @@ const profileDescription = document.querySelector('.profile__description');
 const inputName = document.querySelector('.popup__input-text_type_name');
 const inputDescription = document.querySelector('.popup__input-text_type_description');
 
-const popupAdd = document.querySelector('.popup_add');
+const popupAdd = document.querySelector('.popup__add');
 const formAdd = document.querySelector('.popup__form.popup_add');
 const closeAdd = document.querySelector('.popup__close.popup_add');
 const addButton = document.querySelector('.profile__add-button');
@@ -44,7 +44,7 @@ const addButton = document.querySelector('.profile__add-button');
 const inputNamePlace = document.querySelector('.popup__input-text_type_name-place');
 const inputLinkImg = document.querySelector('.popup__input-text_type_link');
 
-const popupImg = document.querySelector('.popup_image');
+const popupImg = document.querySelector('.popup__image');
 const fullImg = document.querySelector('.full__image');
 const fullCaption = document.querySelector('.full__caption');
 const closeFull = document.querySelector('.popup__close.popup_image');
