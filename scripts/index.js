@@ -76,6 +76,7 @@ function initCard(card, method) {
     const cardElem = evt.target.closest('.element');
     fullCaption.textContent = cardElem.querySelector('.element__title').textContent;
     fullImg.src = cardElem.querySelector('.element__image').src;
+    fullImg.alt = cardElem.querySelector('.element__title').textContent;
     popupImg.classList.add('popup_opened');
   });
 
