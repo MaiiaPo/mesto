@@ -38,7 +38,7 @@ const inputDescription = document.querySelector('.popup__input-text_type_descrip
 
 const popupAdd = document.querySelector('.popup_add');
 const formAdd = document.querySelector('.popup__form_add');
-const closeAdd = document.querySelector('popup__close_add');
+const closeAdd = document.querySelector('.popup__close_add');
 const addButton = document.querySelector('.profile__add-button');
 
 const inputNamePlace = document.querySelector('.popup__input-text_type_name-place');
