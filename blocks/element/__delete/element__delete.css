@@ -10,9 +10,3 @@
   top: 20px;
   right: 20px;
 }
-
-@media screen and (min-width: 1024px) {
-  .element__delete:hover {
-    cursor: pointer;
-  }
-}
