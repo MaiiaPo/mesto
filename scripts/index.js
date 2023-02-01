@@ -23,6 +23,21 @@ const fullImg = document.querySelector('.full__image');
 const fullCaption = document.querySelector('.full__caption');
 const popupFullImgCloseButton = document.querySelector('.popup__close_image');
 
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+}
+
+function openPopupEdit(popup) {
+  openPopup(popup);
+
+  inputName.value = profileName.textContent;
+  inputDescription.value = profileDescription.textContent;
+}
+
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+}
+
 // Создание карточки
 function initCard(cardItem) {
   const cardTemplate = document.querySelector('#element').content;
@@ -50,7 +65,7 @@ function initCard(cardItem) {
     fullCaption.textContent = card.querySelector('.element__title').textContent;
     fullImg.src = card.querySelector('.element__image').src;
     fullImg.alt = card.querySelector('.element__title').textContent;
-    popupFullImg.classList.add('popup_opened');
+    openPopup(popupFullImg);
   });
 
   return card;
@@ -70,20 +85,6 @@ function renderCard(card, method) {
 // отображение карточек
 // eslint-disable-next-line no-undef
 initialCards.forEach((card) => renderCard(initCard(card), 'append'));
-
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
-
-  const openPopupForm = document.querySelector('.popup_opened');
-  if (openPopupForm.classList.contains('popup_edit')) {
-    inputName.value = profileName.textContent;
-    inputDescription.value = profileDescription.textContent;
-  }
-}
-
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-}
 
 // При сохранении закрываем окно, если нет изменений
 // и изменяем значения в профиле, если есть изменения
@@ -110,7 +111,7 @@ function addNewCard(event) {
   closePopup(popupNewCard);
 }
 
-popupProfileOpenButton.addEventListener('click', () => openPopup(popupProfile));
+popupProfileOpenButton.addEventListener('click', () => openPopupEdit(popupProfile));
 formProfile.addEventListener('submit', onSavePopup);
 popupProfileCloseButton.addEventListener('click', () => closePopup(popupProfile));
 
