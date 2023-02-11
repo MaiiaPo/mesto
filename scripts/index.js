@@ -23,12 +23,34 @@ const fullImg = document.querySelector('.full__image');
 const fullCaption = document.querySelector('.full__caption');
 const popupFullImgCloseButton = document.querySelector('.popup__close_image');
 
+function closePopup(popup, form = '') {
+  popup.classList.remove('popup_opened');
+  if (form) {
+    const elementsForm = Array.from(form.elements);
+    const inputs = elementsForm.filter((el) => el.tagName.toLowerCase() === 'input' && el.getAttribute('type') !== 'submit');
+    // eslint-disable-next-line consistent-return
+    inputs.forEach((inp) => {
+      // eslint-disable-next-line no-undef
+      if (inp.classList.contains('popup__input_type_error')) hideInputError(form, inp);
+    });
+    form.reset();
+  }
+}
+
 function openPopup(popup, form = '') {
   popup.classList.add('popup_opened');
 
-  // todo вынести в функцию 
+  document.addEventListener('mousedown', (e) => {
+    e.stopPropagation();
+    if (e.target === popup) {
+      closePopup(popup, form);
+    }
+  });
+
+  // todo вынести в функцию
   if (form) {
     const submit = form.querySelector('.popup__button');
+    // eslint-disable-next-line no-undef
     submit.classList.add(settingsValidation.inactiveButtonClass);
     submit.disabled = true;
   }
@@ -39,13 +61,6 @@ function openPopupEdit(popup, form) {
 
   inputName.value = profileName.textContent;
   inputDescription.value = profileDescription.textContent;
-}
-
-function closePopup(popup, form = '') {
-  popup.classList.remove('popup_opened');
-  if (form) {
-    form.reset();
-  }
 }
 
 // Создание карточки

@@ -21,48 +21,32 @@ function hideInputError(form, input) {
   error.textContent = '';
 }
 
-// function disabledButton(form) {
-//   const submit = form.querySelector('.popup__button');
-//   submit.classList.add(settingsValidation.inactiveButtonClass);
-//   submit.disabled = true;
-// }
-
-// function unDisabledButton(form) {
-//   const submit = form.querySelector('.popup__button');
-//   submit.classList.remove(settingsValidation.inactiveButtonClass);
-//   submit.disabled = false;
-// }
-
 function checkInputValidity(form, input) {
   if (!input.validity.valid) {
     showInputError(form, input, input.validationMessage);
-    //disabledButton(form);
   } else {
     hideInputError(form, input);
-    //unDisabledButton(form);
   }
 }
 
-const hasInvalidInput = (inputList) => {
-  return inputList.some((inputElement) => {
-  return !inputElement.validity.valid;
-}); 
+function hasInvalidInput(inputList) {
+  return inputList.some((inputElement) => !inputElement.validity.valid);
 }
 
-const toggleButtonState = (inputList, buttonElement) => {
+function toggleButtonState(inputList, buttonElement) {
   if (hasInvalidInput(inputList)) {
-  buttonElement.classList.add(settingsValidation.inactiveButtonClass);
-} else {
-  buttonElement.classList.remove(settingsValidation.inactiveButtonClass);
-}
+    buttonElement.classList.add(settingsValidation.inactiveButtonClass);
+  } else {
+    buttonElement.classList.remove(settingsValidation.inactiveButtonClass);
+  }
 }
 
 function setEventListener(form) {
   const inputList = Array.from(form.querySelectorAll(settingsValidation.inputSelector));
   const button = form.querySelector(settingsValidation.submitButtonSelector);
 
-   // чтобы проверить состояние кнопки в самом начале
-   toggleButtonState(inputList, button);
+  // чтобы проверить состояние кнопки в самом начале
+  toggleButtonState(inputList, button);
 
   inputList.forEach((input) => {
     input.addEventListener('input', () => {
@@ -72,15 +56,6 @@ function setEventListener(form) {
     });
   });
 }
-
-// function isValid(form) {
-//   const elements = Array.from(form.elements);
-//   const inputs = elements.filter((el) => el.tagName.toLowerCase() === 'input' && el.getAttribute('type') !== 'submit');
-//   // eslint-disable-next-line consistent-return
-//   inputs.forEach((inp) => {
-//     if (!inp.value) return false;
-//   });
-// }
 
 function enableValidation() {
   const formList = Array.from(document.querySelectorAll(settingsValidation.formSelector));
