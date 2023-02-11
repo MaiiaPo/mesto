@@ -42,22 +42,36 @@
       <div class="popup__container">
         <button class="popup__close popup__close_edit link" type="button" aria-label="Закрыть"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form name="profile" class="popup__form popup__form_edit">
-          <input 
-            type="text" 
-            name="name" 
-            placeholder="Имя" 
-            class="popup__input-text popup__input-text_type_name" 
-            required
-          >
-          <input 
-            type="text" 
-            name="description" 
-            placeholder="О себе" 
-            class="popup__input-text popup__input-text_type_description" 
-            required
-          >
-          <input type="submit" value="Сохранить" class="popup__submit-btn">
+        <form name="profile" class="popup__form popup__form_edit form" novalidate>
+          <fieldset class="form__set">
+            <label class="form__field">
+              <input 
+              type="text" 
+              name="name" 
+              placeholder="Имя" 
+              class="popup__input popup__input_type_name"
+              id="name-input"
+              minlength="2"
+              maxlength="40"
+              required
+              >
+              <span class="popup__error_visible name-input-error" ></span>
+            </label>
+            <label class="form__field">
+              <input 
+              type="text" 
+              name="description" 
+              placeholder="О себе" 
+              class="popup__input popup__input_type_description"
+              id="description-input"
+              minlength="2"
+              maxlength="200"
+              required
+            >
+            <span class="popup__error_visible description-input-error" ></span>
+            </label>
+            <input type="submit" value="Сохранить" class="popup__button popup__button_disabled" disabled>
+          </fieldset>
         </form>
       </div>
     </div>
@@ -66,22 +80,35 @@
       <div class="popup__container">
         <button class="popup__close popup__close_add link" type="button" aria-label="Закрыть"></button>
         <h2 class="popup__title">Новое место</h2>
-        <form name="place" class="popup__form popup__form_add">
-          <input 
-            type="text" 
-            name="name-place" 
-            placeholder="Название" 
-            class="popup__input-text popup__input-text_type_name-place" 
-            required
-          >
-          <input
-            type="text" 
-            name="link" 
-            placeholder="Ссылка на картинку" 
-            class="popup__input-text popup__input-text_type_link" 
-            required
-          >
-          <input type="submit" value="Сохранить" class="popup__submit-btn">
+        <form name="place" class="popup__form popup__form_add" novalidate>
+          <fieldset class="form__set">
+            <label class="form__field">
+              <input 
+              type="text" 
+              name="name-place" 
+              placeholder="Название" 
+              class="popup__input popup__input_type_name-place"
+              id="name-place-input"
+              minlength="2"
+              maxlength="30"
+              required
+              >
+              <span class="popup__error_visible name-place-input-error" ></span>
+            </label>
+            <label class="form__field">
+              <input
+              type="url" 
+              name="link" 
+              placeholder="Ссылка на картинку" 
+              class="popup__input popup__input_type_link"
+              id="link-input"
+              minlength="7"
+              required
+              >
+              <span class="popup__error_visible link-input-error" ></span>
+            </label>          
+          <input type="submit" value="Сохранить" class="popup__button popup__button_disabled" disabled>
+          </fieldset>
         </form>
       </div>
     </div>
@@ -109,5 +136,7 @@
   </template>
   <script src="./scripts/initialCards.js"></script>
   <script src="./scripts/index.js"></script>
+  <script src="./scripts/validate.js"></script>
+  
 </body>
 </html>
