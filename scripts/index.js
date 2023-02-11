@@ -41,9 +41,15 @@ function openPopup(popup, form = '') {
   popup.classList.add('popup_opened');
 
   document.addEventListener('mousedown', (e) => {
-    e.stopPropagation();
     if (e.target === popup) {
       closePopup(popup, form);
+    }
+  });
+
+  document.addEventListener('keyup', (e) => {
+    if (e.key === 'Escape') {
+      closePopup(popup, form);
+      popupProfileOpenButton.style.overflow = 'hidden';
     }
   });
 

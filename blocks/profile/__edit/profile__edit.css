@@ -5,6 +5,7 @@
   width: 18px;
   height: 18px;
   padding-left: 30px;
+  outline: 0px;
 }
 
 @media screen and (min-width: 1024px) {
