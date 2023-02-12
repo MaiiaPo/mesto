@@ -14,7 +14,7 @@
   box-shadow: inset 0 0 1px 1px #7597d9;
 }
 
-.popup__input:first {
+.popup__input:first-child {
   margin-top: 0;
 }
 
