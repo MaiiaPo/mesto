@@ -23,42 +23,66 @@ const fullImg = document.querySelector('.full__image');
 const fullCaption = document.querySelector('.full__caption');
 const popupFullImgCloseButton = document.querySelector('.popup__close_image');
 
+// Очищает значения ошибок
+function clearErrors(form) {
+  const elementsForm = Array.from(form.elements);
+  // Находим все input в форме
+  const inputs = elementsForm.filter((el) => el.tagName.toLowerCase() === 'input' && el.getAttribute('type') !== 'submit');
+
+  inputs.forEach((inp) => {
+    if (inp.classList.contains('popup__input_type_error')) {
+      // eslint-disable-next-line no-undef
+      hideInputError(form, inp, { inputErrorClass: 'popup__input_type_error', errorClass: 'popup__error_visible' });
+    }
+  });
+}
+
 function closePopup(popup, form = '') {
   popup.classList.remove('popup_opened');
   if (form) {
-    const elementsForm = Array.from(form.elements);
-    const inputs = elementsForm.filter((el) => el.tagName.toLowerCase() === 'input' && el.getAttribute('type') !== 'submit');
-    // eslint-disable-next-line consistent-return
-    inputs.forEach((inp) => {
-      // eslint-disable-next-line no-undef
-      if (inp.classList.contains('popup__input_type_error')) hideInputError(form, inp);
-    });
+    clearErrors(form);
     form.reset();
   }
+}
+
+// Закрытие окна попапа, если мышь нажата вне окна
+// или нажата клавиша Escape
+function closePopupOutside(e) {
+  const formElements = document.querySelectorAll('.popup__form');
+  const popupElements = document.querySelectorAll('.popup');
+  // eslint-disable-next-line no-shadow
+  formElements.forEach((form) => {
+    popupElements.forEach((pop) => {
+      if (e.target === pop) {
+        closePopup(pop, form);
+      }
+      if (e.key === 'Escape') {
+        closePopup(pop, form);
+      }
+    });
+  });
+
+  document.removeEventListener('mousedown', closePopupOutside);
+  document.removeEventListener('keyup', closePopupOutside);
+}
+
+// Блокировка кнопки
+function disableButton(form) {
+  const submit = form.querySelector('.popup__button');
+  submit.classList.add('popup__button_disabled');
+  submit.disabled = true;
 }
 
 function openPopup(popup, form = '') {
   popup.classList.add('popup_opened');
 
-  document.addEventListener('mousedown', (e) => {
-    if (e.target === popup) {
-      closePopup(popup, form);
-    }
-  });
+  document.addEventListener('mousedown', closePopupOutside);
+  document.addEventListener('keyup', closePopupOutside);
 
-  document.addEventListener('keyup', (e) => {
-    if (e.key === 'Escape') {
-      closePopup(popup, form);
-      popupProfileOpenButton.style.overflow = 'hidden';
-    }
-  });
-
-  // todo вынести в функцию
+  // Блокировка кнопки отправки при открытии формы:
+  // пока нет изменений или пока не заполнены данные
   if (form) {
-    const submit = form.querySelector('.popup__button');
-    // eslint-disable-next-line no-undef
-    submit.classList.add(settingsValidation.inactiveButtonClass);
-    submit.disabled = true;
+    disableButton(form);
   }
 }
 
@@ -142,11 +166,27 @@ function addNewCard(event) {
   closePopup(popupNewCard, formNewCard);
 }
 
+function keyHandlerAddNewCard(evt) {
+  if (evt.key === 'Enter') {
+    addNewCard(evt);
+  }
+}
+
+function keyHandlerOnSavePopup(evt) {
+  if (evt.key === 'Enter') {
+    onSavePopup(evt);
+  }
+}
+
 popupProfileOpenButton.addEventListener('click', () => openPopupEdit(popupProfile, formProfile));
 formProfile.addEventListener('submit', onSavePopup);
+inputName.addEventListener('keydown', keyHandlerOnSavePopup);
+inputDescription.addEventListener('keydown', keyHandlerOnSavePopup);
 popupProfileCloseButton.addEventListener('click', () => closePopup(popupProfile, formProfile));
 
 popupNewCardOpenButton.addEventListener('click', () => openPopup(popupNewCard, formNewCard));
 formNewCard.addEventListener('submit', addNewCard);
+inputNamePlace.addEventListener('keydown', keyHandlerAddNewCard);
+inputLinkImg.addEventListener('keydown', keyHandlerAddNewCard);
 popupNewCardCloseButton.addEventListener('click', () => closePopup(popupNewCard, formNewCard));
 popupFullImgCloseButton.addEventListener('click', () => closePopup(popupFullImg));
