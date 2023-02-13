@@ -29,13 +29,27 @@ function hasInvalidInput(inputList) {
   return inputList.some((inputElement) => !inputElement.validity.valid);
 }
 
+// Блокировка кнопки
+function disabledButton(button, inactiveButtonClass) {
+  button.classList.add(inactiveButtonClass);
+  // eslint-disable-next-line no-param-reassign
+  button.disabled = true;
+}
+
+// Разблокировка кнопки
+function unDisabledButton(button, inactiveButtonClass) {
+  button.classList.remove(inactiveButtonClass);
+  // eslint-disable-next-line no-param-reassign
+  button.disabled = false;
+}
+
 // Блокирует и дизейблит кнопку отправки формы,
 // если данные в форме не валидны
-function toggleButtonState(inputList, button, data) {
+function toggleButtonState(inputList, button, inactiveButtonClass) {
   if (hasInvalidInput(inputList)) {
-    button.classList.add(data.inactiveButtonClass);
+    disabledButton(button, inactiveButtonClass);
   } else {
-    button.classList.remove(data.inactiveButtonClass);
+    unDisabledButton(button, inactiveButtonClass);
   }
 }
 
@@ -44,12 +58,12 @@ function setEventListener(form, data) {
   const inputList = Array.from(form.querySelectorAll(data.inputSelector));
   const button = form.querySelector(data.submitButtonSelector);
 
-  toggleButtonState(inputList, button, data);
+  toggleButtonState(inputList, button, data.inactiveButtonClass);
 
   inputList.forEach((input) => {
     input.addEventListener('input', () => {
       checkInputValidity(form, input, data);
-      toggleButtonState(inputList, button, data);
+      toggleButtonState(inputList, button, data.inactiveButtonClass);
     });
   });
 }
