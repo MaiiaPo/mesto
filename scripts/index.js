@@ -56,27 +56,17 @@ function resetForm(form) {
 
 // Закрытие окна попапа по клавише Escape
 function closePopupKey(evt) {
-  const popupElement = document.querySelector('.popup_opened');
-  const form = popupElement.querySelector('.popup__form');
-
   if (evt.key === 'Escape') {
+    const popupElement = document.querySelector('.popup_opened');
     closePopup(popupElement);
-    if (form) {
-      resetForm(form);
-    }
   }
 }
 
 // Закрытие окна попапа по мышке вне области
 function closePopupMouse(evt) {
   const popupElement = document.querySelector('.popup_opened');
-  const form = popupElement.querySelector('.popup__form');
-
   if (evt.target === popupElement) {
     closePopup(popupElement);
-    if (form) {
-      resetForm(form);
-    }
   }
 }
 
@@ -171,23 +161,11 @@ function saveAddNewCard(event) {
   resetForm(addCardForm);
 }
 
-function handleAddNewCard(evt) {
-  if (evt.key === 'Enter') {
-    saveAddNewCard(evt);
-  }
-}
-
-function handleSaveProfilePopup(evt) {
-  if (evt.key === 'Enter') {
-    saveProfilePopup(evt);
-  }
-}
-
 profileOpenButton.addEventListener('click', () => openPopupEdit(profilePopup, profileForm));
-profileForm.addEventListener('submit', saveProfilePopup, handleSaveProfilePopup);
+profileForm.addEventListener('submit', saveProfilePopup);
 profileCloseButton.addEventListener('click', () => { closePopup(profilePopup); resetForm(profileForm); });
 
 addCardOpenButton.addEventListener('click', () => openPopupWithForm(addCardPopup, addCardForm));
-addCardForm.addEventListener('submit', saveAddNewCard, handleAddNewCard);
+addCardForm.addEventListener('submit', saveAddNewCard);
 addCardCloseButton.addEventListener('click', () => { closePopup(addCardPopup); resetForm(addCardForm); });
 fullImgCloseButton.addEventListener('click', () => closePopup(fullImgPopup));
