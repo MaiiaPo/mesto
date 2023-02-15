@@ -44,22 +44,29 @@ function removeEvents() {
 }
 
 // Очистка формы
-function resetForm(popup) {
+function resetForm(form) {
+  clearErrors(form);
+  form.reset();
+}
+
+// Находит форму и очищает значение полей
+function checkAndResetForm(popup) {
   const form = popup.querySelector('.popup__form');
   if (form) {
-    clearErrors(form);
-    form.reset();
+    resetForm(form);
   }
 }
 
+// Закрытие попапа
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   removeEvents();
 }
 
-function closePopupForm(popup) {
+// Закрытие попапа с формой
+function closePopupForm(popup, form) {
   closePopup(popup);
-  resetForm(popup);
+  resetForm(form);
 }
 
 // Закрытие окна попапа по клавише Escape
@@ -67,8 +74,7 @@ function closePopupKey(evt) {
   if (evt.key === 'Escape') {
     const popupElement = document.querySelector('.popup_opened');
     closePopup(popupElement);
-    // для сброса полей и ошибок без submit
-    resetForm(popupElement);
+    checkAndResetForm(popupElement);
   }
 }
 
@@ -77,17 +83,23 @@ function closePopupMouse(evt) {
   const popupElement = document.querySelector('.popup_opened');
   if (evt.target === popupElement) {
     closePopup(popupElement);
-    resetForm(popupElement);
+    checkAndResetForm(popupElement);
   }
 }
 
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
-
+// Подписка на события
+function addEvents() {
   document.addEventListener('mousedown', closePopupMouse);
   document.addEventListener('keyup', closePopupKey);
 }
 
+// Открытие попапа
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+  addEvents();
+}
+
+// Открытие попапа с формой
 function openPopupWithForm(popup, form) {
   openPopup(popup);
   const button = form.querySelector('.popup__button');
@@ -154,7 +166,7 @@ function saveProfilePopup(event) {
   event.preventDefault();
   profileName.textContent = inputName.value;
   profileDescription.textContent = inputDescription.value;
-  closePopupForm(profilePopup);
+  closePopupForm(profilePopup, profileForm);
 }
 
 // Добавление новой карточки
@@ -167,14 +179,14 @@ function saveAddNewCard(event) {
   };
 
   renderCard(createCard(newCard), 'prepend');
-  closePopupForm(addCardPopup);
+  closePopupForm(addCardPopup, addCardForm);
 }
 
 profileOpenButton.addEventListener('click', () => openPopupEdit(profilePopup, profileForm));
 profileForm.addEventListener('submit', saveProfilePopup);
-profileCloseButton.addEventListener('click', () => { closePopupForm(profilePopup); });
+profileCloseButton.addEventListener('click', () => { closePopupForm(profilePopup, profileForm); });
 
 addCardOpenButton.addEventListener('click', () => openPopupWithForm(addCardPopup, addCardForm));
 addCardForm.addEventListener('submit', saveAddNewCard);
-addCardCloseButton.addEventListener('click', () => { closePopupForm(addCardPopup); });
+addCardCloseButton.addEventListener('click', () => { closePopupForm(addCardPopup, addCardForm); });
 fullImgCloseButton.addEventListener('click', () => closePopup(fullImgPopup));
