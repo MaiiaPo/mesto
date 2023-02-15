@@ -43,15 +43,23 @@ function removeEvents() {
   document.removeEventListener('keyup', closePopupKey);
 }
 
+// Очистка формы
+function resetForm(popup) {
+  const form = popup.querySelector('.popup__form');
+  if (form) {
+    clearErrors(form);
+    form.reset();
+  }
+}
+
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   removeEvents();
 }
 
-// Очистка формы
-function resetForm(form) {
-  clearErrors(form);
-  form.reset();
+function closePopupForm(popup) {
+  closePopup(popup);
+  resetForm(popup);
 }
 
 // Закрытие окна попапа по клавише Escape
@@ -59,6 +67,7 @@ function closePopupKey(evt) {
   if (evt.key === 'Escape') {
     const popupElement = document.querySelector('.popup_opened');
     closePopup(popupElement);
+    resetForm(popupElement);
   }
 }
 
@@ -67,6 +76,7 @@ function closePopupMouse(evt) {
   const popupElement = document.querySelector('.popup_opened');
   if (evt.target === popupElement) {
     closePopup(popupElement);
+    resetForm(popupElement);
   }
 }
 
@@ -144,7 +154,7 @@ function saveProfilePopup(event) {
   profileName.textContent = inputName.value;
   profileDescription.textContent = inputDescription.value;
   closePopup(profilePopup, profileForm);
-  resetForm(profileForm);
+  resetForm(profilePopup);
 }
 
 // Добавление новой карточки
@@ -158,14 +168,14 @@ function saveAddNewCard(event) {
 
   renderCard(createCard(newCard), 'prepend');
   closePopup(addCardPopup, addCardForm);
-  resetForm(addCardForm);
+  resetForm(addCardPopup);
 }
 
 profileOpenButton.addEventListener('click', () => openPopupEdit(profilePopup, profileForm));
 profileForm.addEventListener('submit', saveProfilePopup);
-profileCloseButton.addEventListener('click', () => { closePopup(profilePopup); resetForm(profileForm); });
+profileCloseButton.addEventListener('click', () => { closePopupForm(profilePopup); });
 
 addCardOpenButton.addEventListener('click', () => openPopupWithForm(addCardPopup, addCardForm));
 addCardForm.addEventListener('submit', saveAddNewCard);
-addCardCloseButton.addEventListener('click', () => { closePopup(addCardPopup); resetForm(addCardForm); });
+addCardCloseButton.addEventListener('click', () => { closePopupForm(addCardPopup); });
 fullImgCloseButton.addEventListener('click', () => closePopup(fullImgPopup));
