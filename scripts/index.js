@@ -67,6 +67,7 @@ function closePopupKey(evt) {
   if (evt.key === 'Escape') {
     const popupElement = document.querySelector('.popup_opened');
     closePopup(popupElement);
+    // для сброса полей и ошибок без submit
     resetForm(popupElement);
   }
 }
@@ -153,8 +154,7 @@ function saveProfilePopup(event) {
   event.preventDefault();
   profileName.textContent = inputName.value;
   profileDescription.textContent = inputDescription.value;
-  closePopup(profilePopup, profileForm);
-  resetForm(profilePopup);
+  closePopupForm(profilePopup);
 }
 
 // Добавление новой карточки
@@ -167,8 +167,7 @@ function saveAddNewCard(event) {
   };
 
   renderCard(createCard(newCard), 'prepend');
-  closePopup(addCardPopup, addCardForm);
-  resetForm(addCardPopup);
+  closePopupForm(addCardPopup);
 }
 
 profileOpenButton.addEventListener('click', () => openPopupEdit(profilePopup, profileForm));
