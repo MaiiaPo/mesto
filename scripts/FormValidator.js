@@ -3,6 +3,8 @@ export default class FormValidator {
   constructor(formElement, settings) {
     this._formElement = formElement;
     this._settings = settings;
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._settings.inputSelector));
+    this._button = this._formElement.querySelector(this._settings.submitButtonSelector);
     this.enableValidation();
   }
 
@@ -15,22 +17,20 @@ export default class FormValidator {
 
   // Подписка на событие изменения данных в input
   _setEventListener() {
-    const inputList = Array.from(this._formElement.querySelectorAll(this._settings.inputSelector));
+    this._toggleButtonState();
 
-    this._toggleButtonState(inputList);
-
-    inputList.forEach((input) => {
+    this._inputList.forEach((input) => {
       input.addEventListener('input', () => {
         this._checkInputValidity(input);
-        this._toggleButtonState(inputList);
+        this._toggleButtonState();
       });
     });
   }
 
   // Блокирует и дизейблит кнопку отправки формы,
   // если данные в форме не валидны
-  _toggleButtonState(inputList) {
-    if (this._hasInvalidInput(inputList)) {
+  _toggleButtonState() {
+    if (this._hasInvalidInput()) {
       this.disabledButton();
     } else {
       this._unDisabledButton();
@@ -65,24 +65,22 @@ export default class FormValidator {
 
   // Проверка валидности введенных данных
   // eslint-disable-next-line class-methods-use-this
-  _hasInvalidInput(inputList) {
-    return inputList.some((inputElement) => !inputElement.validity.valid);
+  _hasInvalidInput() {
+    return this._inputList.some((inputElement) => !inputElement.validity.valid);
   }
 
   // Блокировка кнопки
   disabledButton() {
-    const button = this._formElement.querySelector(this._settings.submitButtonSelector);
-    button.classList.add(this._settings.inactiveButtonClass);
+    this._button.classList.add(this._settings.inactiveButtonClass);
     // eslint-disable-next-line no-param-reassign
-    button.disabled = true;
+    this._button.disabled = true;
   }
 
   // Разблокировка кнопки
   _unDisabledButton() {
-    const button = this._formElement.querySelector(this._settings.submitButtonSelector);
-    button.classList.remove(this._settings.inactiveButtonClass);
+    this._button.classList.remove(this._settings.inactiveButtonClass);
     // eslint-disable-next-line no-param-reassign
-    button.disabled = false;
+    this._button.disabled = false;
   }
 
   // Очищает значения ошибок

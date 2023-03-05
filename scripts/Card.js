@@ -1,10 +1,12 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-underscore-dangle */
 export default class Card {
-  constructor(card, template) {
+  constructor(card, template, handleOpenImage) {
     this.name = card.name;
     this.link = card.link;
     this.template = template;
+    this._handleOpenImage = handleOpenImage;
+    this._cardElement = this._getTemplate();
   }
 
   _getTemplate() {
@@ -18,44 +20,37 @@ export default class Card {
   }
 
   createCard() {
-    const cardElement = this._getTemplate();
-
-    const img = cardElement.querySelector('.element__image');
-    const title = cardElement.querySelector('.element__title');
+    const img = this._cardElement.querySelector('.element__image');
+    const title = this._cardElement.querySelector('.element__title');
 
     img.src = this.link;
     img.alt = this.name;
     title.textContent = this.name;
 
-    this._setEventListeners(cardElement);
+    this._setEventListeners();
 
-    return cardElement;
+    return this._cardElement;
   }
 
   _handleLike(evt) {
     evt.target.classList.toggle('element__like_active');
   }
 
-  _handleRemoveCard(cardElement) {
-    cardElement.remove();
+  _handleRemoveCard() {
+    this._cardElement.remove();
   }
 
   _handleOpenFullScreen() {
-    const fullCaption = document.querySelector('.full__caption');
-    const fullImg = document.querySelector('.full__image');
-    const fullImgPopup = document.querySelector('.popup_image');
-
-    fullCaption.textContent = this.name;
-    fullImg.src = this.link;
-    fullImg.alt = this.name;
-
-    fullImgPopup.classList.add('popup_opened');
+    this._cardElement.querySelector('.element__image').addEventListener('click', () => {
+      this._handleOpenImage(this.name, this.link);
+    });
   }
 
-  _setEventListeners(cardElement) {
-    cardElement.querySelector('.element__like').addEventListener('click', this._handleLike);
-    cardElement.querySelector('.element__delete').addEventListener('click', () => {
-      this._handleRemoveCard(cardElement);
+  _setEventListeners() {
+    this._cardElement.querySelector('.element__like').addEventListener('click', this._handleLike);
+    this._cardElement.querySelector('.element__delete').addEventListener('click', () => {
+      this._handleRemoveCard();
     });
+    this._handleOpenFullScreen();
   }
 }
