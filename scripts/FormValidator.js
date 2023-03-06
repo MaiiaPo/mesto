@@ -85,14 +85,10 @@ export default class FormValidator {
 
   // Очищает значения ошибок
   clearErrors() {
-    const elementsForm = Array.from(this._formElement.elements);
-    // Находим все input в форме
-    const inputs = elementsForm.filter((el) => el.tagName.toLowerCase() === 'input' && el.getAttribute('type') !== 'submit');
-
-    inputs.forEach((inp) => {
-      if (inp.classList.contains('popup__input_type_error')) {
+    this._inputList.forEach((input) => {
+      if (input.classList.contains('popup__input_type_error')) {
         // eslint-disable-next-line no-undef
-        this._hideInputError(inp);
+        this._hideInputError(input);
       }
     });
   }
