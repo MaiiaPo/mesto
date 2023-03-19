@@ -69,8 +69,6 @@ const openFullScreen = (name, link) => {
 const defaultCardList = new Section({ data: initialCards }, 'append', '.elements', openFullScreen);
 defaultCardList.renderItems();
 
-
-
 function openPopupEdit(popup) {
   if (formProfileInputName.value === '' && formProfileInputDescription.value === '') {
     formProfileInputName.value = profileName.textContent;
@@ -118,23 +116,6 @@ function closePopupMouse(evt) {
   if (evt.target === popupElement) {
     closePopup(popupElement);
   }
-}
-
-// Добавление карточки
-function renderCard(card, cardItem, method) {
-  if (method === 'append') {
-    elements.append(card);
-  } else {
-    elements.prepend(card);
-  }
-}
-
-
-
-// Создание карточки
-function generateCard(cardItem, method) {
-  const card = new Card(cardItem, '#element', openFullScreen);
-  renderCard(card.createCard(), cardItem, method);
 }
 
 // При сохранении закрываем окно, если нет изменений
