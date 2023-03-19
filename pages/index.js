@@ -1,5 +1,6 @@
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
 import { initialCards } from '../utils/initialCards.js';
 
 const elements = document.querySelector('.elements');
@@ -37,6 +38,10 @@ const settingsValidation = {
 
 const profileFormValidate = new FormValidator(document.forms.profile, settingsValidation);
 const addCardFormValidate = new FormValidator(document.forms.place, settingsValidation);
+
+// Создание карточек по умолчанию
+const defaultCardList = new Section({ data: initialCards }, 'append', '.elements');
+defaultCardList.renderItems();
 
 // Подписка на события
 function addEvents() {
@@ -128,12 +133,6 @@ function generateCard(cardItem, method) {
   renderCard(card.createCard(), cardItem, method);
 }
 
-// отображение карточек
-// eslint-disable-next-line no-undef
-initialCards.forEach((cardItem) => {
-  generateCard(cardItem, 'append');
-});
-
 // При сохранении закрываем окно, если нет изменений
 // и изменяем значения в профиле, если есть изменения
 function saveProfilePopup(event) {
@@ -153,7 +152,11 @@ function saveAddNewCard(event) {
     link: formAddCardInputLinkImg.value,
   };
 
-  generateCard(newCard, 'prepend');
+  const arrCard = [];
+  arrCard.push(newCard);
+
+  const сardElement = new Section({ data: arrCard }, 'prepend', '.elements');
+  сardElement.renderItems();
 
   closePopup(popupAddCard);
   resetForm(formAddCard);

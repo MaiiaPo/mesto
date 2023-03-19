@@ -5,7 +5,7 @@ export default class Card {
     this.name = card.name;
     this.link = card.link;
     this.template = template;
-    this._handleOpenImage = handleOpenImage;
+    //this._handleOpenImage = handleOpenImage;
     this._cardElement = this._getTemplate();
   }
 
@@ -51,6 +51,6 @@ export default class Card {
     this._cardElement.querySelector('.element__delete').addEventListener('click', () => {
       this._handleRemoveCard();
     });
-    this._handleOpenFullScreen();
+    //this._handleOpenFullScreen();
   }
 }
