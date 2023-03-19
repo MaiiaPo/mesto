@@ -1,11 +1,11 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-underscore-dangle */
 export default class Card {
-  constructor(card, template, handleOpenImage) {
+  constructor(card, template, handleCardClick) {
     this.name = card.name;
     this.link = card.link;
     this.template = template;
-    this._handleOpenImage = handleOpenImage;
+    this._handleCardClick = handleCardClick;
     this._cardElement = this._getTemplate();
   }
 
@@ -42,7 +42,7 @@ export default class Card {
 
   _handleOpenFullScreen() {
     this._cardElement.querySelector('.element__image').addEventListener('click', () => {
-      this._handleOpenImage(this.name, this.link);
+      this._handleCardClick(this.name, this.link);
     });
   }
 

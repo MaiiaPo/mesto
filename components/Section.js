@@ -1,5 +1,7 @@
-import Card from './Card.js';
+/* eslint-disable import/extensions */
 /* eslint-disable no-underscore-dangle */
+import Card from './Card.js';
+
 export default class Section {
   constructor({ data }, method, selector, handleOpenImage) {
     this._items = data;
