@@ -39,10 +39,6 @@ const settingsValidation = {
 const profileFormValidate = new FormValidator(document.forms.profile, settingsValidation);
 const addCardFormValidate = new FormValidator(document.forms.place, settingsValidation);
 
-// Создание карточек по умолчанию
-const defaultCardList = new Section({ data: initialCards }, 'append', '.elements');
-defaultCardList.renderItems();
-
 // Подписка на события
 function addEvents() {
   document.addEventListener('mousedown', closePopupMouse);
@@ -60,6 +56,20 @@ function openPopup(popup) {
   popup.classList.add('popup_opened');
   addEvents();
 }
+
+const openFullScreen = (name, link) => {
+  captionPopupFullScreen.textContent = name;
+  imgPopupFullScreen.src = link;
+  imgPopupFullScreen.alt = name;
+
+  openPopup(popupFullScreenCardImage);
+};
+
+// Создание карточек по умолчанию
+const defaultCardList = new Section({ data: initialCards }, 'append', '.elements', openFullScreen);
+defaultCardList.renderItems();
+
+
 
 function openPopupEdit(popup) {
   if (formProfileInputName.value === '' && formProfileInputDescription.value === '') {
@@ -119,13 +129,7 @@ function renderCard(card, cardItem, method) {
   }
 }
 
-const openFullScreen = (name, link) => {
-  captionPopupFullScreen.textContent = name;
-  imgPopupFullScreen.src = link;
-  imgPopupFullScreen.alt = name;
 
-  openPopup(popupFullScreenCardImage);
-};
 
 // Создание карточки
 function generateCard(cardItem, method) {
@@ -155,7 +159,7 @@ function saveAddNewCard(event) {
   const arrCard = [];
   arrCard.push(newCard);
 
-  const сardElement = new Section({ data: arrCard }, 'prepend', '.elements');
+  const сardElement = new Section({ data: arrCard }, 'prepend', '.elements', openFullScreen);
   сardElement.renderItems();
 
   closePopup(popupAddCard);
