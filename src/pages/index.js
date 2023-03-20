@@ -38,7 +38,8 @@ const openFullScreen = (name, link) => {
 // и изменяем значения в профиле, если есть изменения
 const saveProfilePopup = (event) => {
   event.preventDefault();
-  userInfo.setUserInfo(formProfileInputName.value, formProfileInputDescription.value);
+  const formValues = popupProfileForm.getInputValues();
+  userInfo.setUserInfo(formValues.name, formValues.description);
   popupProfileForm.close();
 };
 
