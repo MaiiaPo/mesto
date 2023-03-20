@@ -8,16 +8,18 @@ export default class UserInfo {
 
   getUser() {
     return {
-      name: this._nameUser,
-      description: this._descriptionUser,
+      name: this._nameUser.textContent,
+      description: this._descriptionUser.textContent,
     };
   }
 
   setUserInfo(name, description) {
-    const profileName = document.querySelector('.profile__name');
-    const profileDescription = document.querySelector('.profile__description');
+    if (name) {
+      this._nameUser.textContent = name;
+    }
 
-    profileName.textContent = name;
-    profileDescription.textContent = description;
+    if (description) {
+      this._descriptionUser.textContent = description;
+    }
   }
 }
