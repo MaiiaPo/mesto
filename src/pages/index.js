@@ -17,8 +17,6 @@ import {
   formProfileInputName,
   formProfileInputDescription,
   buttonOpenFormAddCard,
-  formAddCardInputNamePlace,
-  formAddCardInputLinkImg,
 } from '../utils/constants.js';
 
 const profileFormValidate = new FormValidator(document.forms.profile, settingsValidation);
@@ -32,10 +30,8 @@ const openFullScreen = (name, link) => {
 
 // При сохранении закрываем окно, если нет изменений
 // и изменяем значения в профиле, если есть изменения
-const saveProfilePopup = (event) => {
-  event.preventDefault();
-  const formValues = popupProfileForm.getInputValues();
-  userInfo.setUserInfo(formValues.name, formValues.description);
+const saveProfilePopup = (values) => {
+  userInfo.setUserInfo(values.name, values.description);
   popupProfileForm.close();
 };
 
@@ -57,12 +53,10 @@ const defaultCardList = new Section(
 defaultCardList.renderItems(initialCards, true);
 
 // Добавление новой карточки
-const saveAddNewCard = (event) => {
-  event.preventDefault();
-
+const saveAddNewCard = (values) => {
   const newCard = {
-    name: formAddCardInputNamePlace.value,
-    link: formAddCardInputLinkImg.value,
+    name: values['name-place'],
+    link: values.link,
   };
 
   const arrCard = [];

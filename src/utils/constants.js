@@ -1,13 +1,10 @@
 export const buttonOpenProfileForm = document.querySelector('.profile__edit');
+export const buttonOpenFormAddCard = document.querySelector('.profile__add-button');
 
 export const profileName = document.querySelector('.profile__name');
 export const profileDescription = document.querySelector('.profile__description');
 export const formProfileInputName = document.querySelector('.popup__input_type_name');
 export const formProfileInputDescription = document.querySelector('.popup__input_type_description');
-
-export const buttonOpenFormAddCard = document.querySelector('.profile__add-button');
-export const formAddCardInputNamePlace = document.querySelector('.popup__input_type_name-place');
-export const formAddCardInputLinkImg = document.querySelector('.popup__input_type_link');
 
 export const cardsSelector = '.elements';
 
