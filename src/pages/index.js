@@ -1,4 +1,5 @@
 /* eslint-disable import/extensions */
+import './index.css';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import FormValidator from '../components/FormValidator.js';
