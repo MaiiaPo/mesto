@@ -1,5 +1,6 @@
 /* eslint-disable import/extensions */
 import './index.css';
+import Card from '../components/Card.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import FormValidator from '../components/FormValidator.js';
@@ -9,6 +10,7 @@ import UserInfo from '../components/UserInfo.js';
 import {
   initialCards,
   settingsValidation,
+  cardsSelector,
   buttonOpenProfileForm,
   profileName,
   profileDescription,
@@ -17,8 +19,6 @@ import {
   buttonOpenFormAddCard,
   formAddCardInputNamePlace,
   formAddCardInputLinkImg,
-  imgPopupFullScreen,
-  captionPopupFullScreen,
 } from '../utils/constants.js';
 
 const profileFormValidate = new FormValidator(document.forms.profile, settingsValidation);
@@ -27,10 +27,6 @@ const addCardFormValidate = new FormValidator(document.forms.place, settingsVali
 const userInfo = new UserInfo(profileName, profileDescription);
 
 const openFullScreen = (name, link) => {
-  captionPopupFullScreen.textContent = name;
-  imgPopupFullScreen.src = link;
-  imgPopupFullScreen.alt = name;
-
   popupCardImg.open(name, link);
 };
 
@@ -43,6 +39,23 @@ const saveProfilePopup = (event) => {
   popupProfileForm.close();
 };
 
+const createCard = (item, selector) => {
+  const card = new Card(item, selector, openFullScreen);
+  return card.createCard();
+};
+
+// Создание карточек по умолчанию
+const defaultCardList = new Section(
+  {
+    renderer: (item, isAppend) => {
+      const defaultCard = createCard(item, '#element');
+      defaultCardList.setItem(defaultCard, isAppend);
+    },
+  },
+  cardsSelector,
+);
+defaultCardList.renderItems(initialCards, true);
+
 // Добавление новой карточки
 const saveAddNewCard = (event) => {
   event.preventDefault();
@@ -54,9 +67,7 @@ const saveAddNewCard = (event) => {
 
   const arrCard = [];
   arrCard.push(newCard);
-
-  const cardElement = new Section({ data: arrCard }, 'prepend', '.elements', openFullScreen);
-  cardElement.renderItems();
+  defaultCardList.renderItems(arrCard, false);
 
   popupAddCardForm.close();
 };
@@ -69,26 +80,19 @@ popupProfileForm.setEventListeners();
 popupAddCardForm.setEventListeners();
 popupCardImg.setEventListeners();
 
-// Создание карточек по умолчанию
-const defaultCardList = new Section({ data: initialCards }, 'append', '.elements', openFullScreen);
-defaultCardList.renderItems();
-
 const openPopupEditProfile = () => {
   const getUser = userInfo.getUser();
 
-  if (formProfileInputName.value === '' && formProfileInputDescription.value === '') {
-    formProfileInputName.value = getUser.name;
-    formProfileInputDescription.value = getUser.description;
-  }
-
-  if (formProfileInputName.value === profileName.textContent
-    && formProfileInputDescription.value === profileDescription.textContent) {
-    profileFormValidate.disabledButton();
-  }
+  formProfileInputName.value = getUser.name;
+  formProfileInputDescription.value = getUser.description;
 
   profileFormValidate.clearErrors();
   popupProfileForm.open();
 };
 
 buttonOpenProfileForm.addEventListener('click', () => { openPopupEditProfile(); });
-buttonOpenFormAddCard.addEventListener('click', () => { addCardFormValidate.clearErrors(); popupAddCardForm.open(); });
+buttonOpenFormAddCard.addEventListener('click', () => {
+  addCardFormValidate.disabledButton();
+  addCardFormValidate.clearErrors();
+  popupAddCardForm.open();
+});

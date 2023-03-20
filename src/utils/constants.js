@@ -9,8 +9,7 @@ export const buttonOpenFormAddCard = document.querySelector('.profile__add-butto
 export const formAddCardInputNamePlace = document.querySelector('.popup__input_type_name-place');
 export const formAddCardInputLinkImg = document.querySelector('.popup__input_type_link');
 
-export const imgPopupFullScreen = document.querySelector('.full__image');
-export const captionPopupFullScreen = document.querySelector('.full__caption');
+export const cardsSelector = '.elements';
 
 export const settingsValidation = {
   formSelector: '.popup__form',
