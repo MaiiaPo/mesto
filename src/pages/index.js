@@ -4,31 +4,22 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
-import { initialCards } from '../utils/initialCards.js';
 import UserInfo from '../components/UserInfo.js';
 
-const buttonOpenProfileForm = document.querySelector('.profile__edit');
-
-const profileName = document.querySelector('.profile__name');
-const profileDescription = document.querySelector('.profile__description');
-const formProfileInputName = document.querySelector('.popup__input_type_name');
-const formProfileInputDescription = document.querySelector('.popup__input_type_description');
-
-const buttonOpenFormAddCard = document.querySelector('.profile__add-button');
-const formAddCardInputNamePlace = document.querySelector('.popup__input_type_name-place');
-const formAddCardInputLinkImg = document.querySelector('.popup__input_type_link');
-
-const imgPopupFullScreen = document.querySelector('.full__image');
-const captionPopupFullScreen = document.querySelector('.full__caption');
-
-const settingsValidation = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible',
-};
+import {
+  initialCards,
+  settingsValidation,
+  buttonOpenProfileForm,
+  profileName,
+  profileDescription,
+  formProfileInputName,
+  formProfileInputDescription,
+  buttonOpenFormAddCard,
+  formAddCardInputNamePlace,
+  formAddCardInputLinkImg,
+  imgPopupFullScreen,
+  captionPopupFullScreen,
+} from '../utils/constants.js';
 
 const profileFormValidate = new FormValidator(document.forms.profile, settingsValidation);
 const addCardFormValidate = new FormValidator(document.forms.place, settingsValidation);
