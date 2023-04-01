@@ -9,7 +9,6 @@ import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 
 import {
-  initialCards,
   settingsValidation,
   cardsSelector,
   buttonOpenProfileForm,
@@ -49,28 +48,39 @@ const defaultCardList = new Section(
 );
 
 /**
- * Получение карточек с сервера
+ * Получение карточек и информации о пользователе с сервера.
+ * Отображение на странице.
  */
-Promise.all([api.getInitialCards()])
-  .then((cardsArray) => {
-    defaultCardList.renderItems(cardsArray[0], true);
+Promise.all([api.getInitialCards(), api.getUserData()])
+  .then(([cardsArray, userData]) => {
+    userInfo.setUserInfo(userData.name, userData.about);
+    defaultCardList.renderItems(cardsArray, true);
   })
   .catch((err) => {
     console.log(err);
   });
 
+/**
+ * Открытие изображение карточки на полный экран
+ */
 const openFullScreen = (name, link) => {
   popupCardImg.open(name, link);
 };
 
-// При сохранении закрываем окно, если нет изменений
-// и изменяем значения в профиле, если есть изменения
+/**
+ * Сохраняем новые значения профиля
+ */
 const saveProfilePopup = (values) => {
   userInfo.setUserInfo(values.name, values.description);
+  Promise.all([api.updateUserData(values)])
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   popupProfileForm.close();
 };
-
-
 
 // Добавление новой карточки
 const saveAddNewCard = (values) => {
