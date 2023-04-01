@@ -6,6 +6,7 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 
 import {
   initialCards,
@@ -24,6 +25,40 @@ const addCardFormValidate = new FormValidator(document.forms.place, settingsVali
 
 const userInfo = new UserInfo(profileName, profileDescription);
 
+const api = new Api('2966f134-ddf9-4ef6-92e6-3cc74f9bff8f', 'cohort-62');
+
+/**
+ * Создание карточки
+ */
+const createCard = (item, selector) => {
+  const card = new Card(item, selector, openFullScreen);
+  return card.createCard();
+};
+
+/**
+ * Отрисовка карточек на странице
+ */
+const defaultCardList = new Section(
+  {
+    renderer: (item, isAppend) => {
+      const defaultCard = createCard(item, '#element');
+      defaultCardList.setItem(defaultCard, isAppend);
+    },
+  },
+  cardsSelector,
+);
+
+/**
+ * Получение карточек с сервера
+ */
+Promise.all([api.getInitialCards()])
+  .then((cardsArray) => {
+    defaultCardList.renderItems(cardsArray[0], true);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 const openFullScreen = (name, link) => {
   popupCardImg.open(name, link);
 };
@@ -35,22 +70,7 @@ const saveProfilePopup = (values) => {
   popupProfileForm.close();
 };
 
-const createCard = (item, selector) => {
-  const card = new Card(item, selector, openFullScreen);
-  return card.createCard();
-};
 
-// Создание карточек по умолчанию
-const defaultCardList = new Section(
-  {
-    renderer: (item, isAppend) => {
-      const defaultCard = createCard(item, '#element');
-      defaultCardList.setItem(defaultCard, isAppend);
-    },
-  },
-  cardsSelector,
-);
-defaultCardList.renderItems(initialCards, true);
 
 // Добавление новой карточки
 const saveAddNewCard = (values) => {
