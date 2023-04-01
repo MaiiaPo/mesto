@@ -53,6 +53,7 @@ const defaultCardList = new Section(
  */
 Promise.all([api.getInitialCards(), api.getUserData()])
   .then(([cardsArray, userData]) => {
+    console.log(cardsArray);
     userInfo.setUserInfo(userData.name, userData.about);
     defaultCardList.renderItems(cardsArray, true);
   })
@@ -74,7 +75,6 @@ const saveProfilePopup = (values) => {
   userInfo.setUserInfo(values.name, values.description);
   api.updateUserData(values)
     .then((res) => {
-      console.log(res);
       popupProfileForm.close();
     })
     .catch((err) => {
