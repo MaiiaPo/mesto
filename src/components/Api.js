@@ -1,15 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 export default class Api {
   constructor(token, groupId) {
-    this.__token = token;
-    this.__groupId = groupId;
+    this._token = token;
+    this._groupId = groupId;
   }
 
   // Получение существующих карточек с сервера
   getInitialCards() {
-    return fetch(`https://mesto.nomoreparties.co/v1/${this.__groupId}/cards`, {
+    return fetch(`https://mesto.nomoreparties.co/v1/${this._groupId}/cards`, {
       headers: {
-        authorization: this.__token,
+        authorization: this._token,
       },
     })
       .then((res) => {
@@ -20,13 +20,12 @@ export default class Api {
   }
 
   getUserData() {
-    return fetch(`https://mesto.nomoreparties.co/v1/${this.__groupId}/users/me`, {
+    return fetch(`https://mesto.nomoreparties.co/v1/${this._groupId}/users/me`, {
       headers: {
-        authorization: this.__token,
+        authorization: this._token,
       },
     })
       .then((res) => {
-        console.log(res);
         if (res.ok) return res.json();
         // eslint-disable-next-line prefer-promise-reject-errors
         return Promise.reject(`Ошибка ${res.status}`);
@@ -34,10 +33,10 @@ export default class Api {
   }
 
   updateUserData(userData) {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-62/users/me', {
+    return fetch(`https://mesto.nomoreparties.co/v1/${this._groupId}/users/me`, {
       method: 'PATCH',
       headers: {
-        authorization: this.__token,
+        authorization: this._token,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -50,5 +49,23 @@ export default class Api {
         // eslint-disable-next-line prefer-promise-reject-errors
         return Promise.reject(`Ошибка ${res.status}`);
       });
+  }
+
+  addCard(data) {
+    return fetch(`https://mesto.nomoreparties.co/v1/${this._groupId}/cards`, {
+      method: 'POST',
+      headers: {
+        authorization: this._token,
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: data.name,
+        link: data.link,
+      }),
+    }).then((res) => {
+      if (res.ok) return res.json();
+      // eslint-disable-next-line prefer-promise-reject-errors
+      return Promise.reject(`Ошибка ${res.status}`);
+    });
   }
 }

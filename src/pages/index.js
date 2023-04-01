@@ -57,7 +57,7 @@ Promise.all([api.getInitialCards(), api.getUserData()])
     defaultCardList.renderItems(cardsArray, true);
   })
   .catch((err) => {
-    console.log(err);
+    console.err(err);
   });
 
 /**
@@ -72,14 +72,14 @@ const openFullScreen = (name, link) => {
  */
 const saveProfilePopup = (values) => {
   userInfo.setUserInfo(values.name, values.description);
-  Promise.all([api.updateUserData(values)])
+  api.updateUserData(values)
     .then((res) => {
       console.log(res);
+      popupProfileForm.close();
     })
     .catch((err) => {
-      console.log(err);
+      console.err(err);
     });
-  popupProfileForm.close();
 };
 
 // Добавление новой карточки
@@ -89,11 +89,14 @@ const saveAddNewCard = (values) => {
     link: values.link,
   };
 
-  const arrCard = [];
-  arrCard.push(newCard);
-  defaultCardList.renderItems(arrCard, false);
-
-  popupAddCardForm.close();
+  api.addCard(newCard)
+    .then((dataCard) => {
+      defaultCardList.renderItems([dataCard], false);
+      popupAddCardForm.close();
+    })
+    .catch((err) => {
+      console.err(err);
+    });
 };
 
 const popupProfileForm = new PopupWithForm('.popup_type_edit', saveProfilePopup);
