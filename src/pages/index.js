@@ -14,19 +14,60 @@ import {
   buttonOpenProfileForm,
   profileName,
   profileDescription,
+  profileAvatarImg,
   formProfileInputName,
   formProfileInputDescription,
   buttonOpenFormAddCard,
+  profileAvatar,
 } from '../utils/constants.js';
 import PopupConfirm from '../components/PopupConfirm';
+
+const api = new Api('2966f134-ddf9-4ef6-92e6-3cc74f9bff8f', 'cohort-62');
+const userInfo = new UserInfo(profileName, profileDescription, profileAvatarImg);
+let userId = '';
+
+/**
+ * Изменение аватара пользователя
+ */
+const saveProfileAvatar = (values) => {
+  api.editAvatar(values['avatar-link'])
+    .then(() => {
+      popupProfileEditAvatarForm.close();
+      userInfo.setUserInfo({ avatar: values['avatar-link'] });
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
+/**
+ * Сохраняем новые значения профиля
+ */
+const saveProfilePopup = (values) => {
+  userInfo.setUserInfo({ name: values.name, description: values.description });
+  api.updateUserData(values)
+    .then(() => {
+      popupProfileForm.close();
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
 
 const profileFormValidate = new FormValidator(document.forms.profile, settingsValidation);
 const addCardFormValidate = new FormValidator(document.forms.place, settingsValidation);
 
-const userInfo = new UserInfo(profileName, profileDescription);
+const popupProfileForm = new PopupWithForm('.popup_type_edit', saveProfilePopup);
+const popupProfileEditAvatarForm = new PopupWithForm('.popup_type_edit-avatar', saveProfileAvatar);
+const popupAddCardForm = new PopupWithForm('.popup_type_add', saveAddNewCard);
+const popupDeleteCardConfirm = new PopupConfirm('.popup_type_confirm');
+const popupCardImg = new PopupWithImage('.popup_image');
 
-const api = new Api('2966f134-ddf9-4ef6-92e6-3cc74f9bff8f', 'cohort-62');
-let userId = '';
+popupProfileForm.setEventListeners();
+popupProfileEditAvatarForm.setEventListeners();
+popupAddCardForm.setEventListeners();
+popupDeleteCardConfirm.setEventListeners();
+popupCardImg.setEventListeners();
 
 /**
  * Создание карточки
@@ -57,7 +98,8 @@ Promise.all([api.getInitialCards(), api.getUserData()])
   .then(([cardsArray, userData]) => {
     // eslint-disable-next-line no-underscore-dangle
     userId = userData._id;
-    userInfo.setUserInfo(userData.name, userData.about);
+    const { name, about, avatar } = userData;
+    userInfo.setUserInfo({ name, description: about, avatar });
     defaultCardList.renderItems(cardsArray, true);
   })
   .catch((err) => {
@@ -112,20 +154,8 @@ const deleteLike = (card) => {
 };
 
 /**
- * Сохраняем новые значения профиля
+ * Добавление новой карточки
  */
-const saveProfilePopup = (values) => {
-  userInfo.setUserInfo(values.name, values.description);
-  api.updateUserData(values)
-    .then(() => {
-      popupProfileForm.close();
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-};
-
-// Добавление новой карточки
 const saveAddNewCard = (values) => {
   const newCard = {
     name: values['name-place'],
@@ -141,17 +171,6 @@ const saveAddNewCard = (values) => {
       console.error(err);
     });
 };
-
-const popupProfileForm = new PopupWithForm('.popup_type_edit', saveProfilePopup);
-const popupAddCardForm = new PopupWithForm('.popup_type_add', saveAddNewCard);
-const popupDeleteCardConfirm = new PopupConfirm('.popup_type_confirm');
-
-const popupCardImg = new PopupWithImage('.popup_image');
-
-popupProfileForm.setEventListeners();
-popupAddCardForm.setEventListeners();
-popupDeleteCardConfirm.setEventListeners();
-popupCardImg.setEventListeners();
 
 const openPopupEditProfile = () => {
   const getUser = userInfo.getUser();
@@ -169,3 +188,4 @@ buttonOpenFormAddCard.addEventListener('click', () => {
   addCardFormValidate.clearErrors();
   popupAddCardForm.open();
 });
+profileAvatar.addEventListener('click', () => { popupProfileEditAvatarForm.open(); });

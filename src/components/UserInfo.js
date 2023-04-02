@@ -1,9 +1,10 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-underscore-dangle */
 export default class UserInfo {
-  constructor(nameUser, descriptionUser) {
+  constructor(nameUser, descriptionUser, avatar) {
     this._nameUser = nameUser;
     this._descriptionUser = descriptionUser;
+    this._avatar = avatar;
   }
 
   getUser() {
@@ -13,7 +14,7 @@ export default class UserInfo {
     };
   }
 
-  setUserInfo(name, description) {
+  setUserInfo({ name, description, avatar }) {
     if (name) {
       this._nameUser.textContent = name;
     }
@@ -21,5 +22,13 @@ export default class UserInfo {
     if (description) {
       this._descriptionUser.textContent = description;
     }
+
+    if (avatar) {
+      this._avatar.src = avatar;
+    }
+  }
+
+  getUserAvatar() {
+    return this._avatar.value;
   }
 }

@@ -51,6 +51,24 @@ export default class Api {
       });
   }
 
+  editAvatar(link) {
+    return fetch(`https://mesto.nomoreparties.co/v1/${this._groupId}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._token,
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        avatar: link,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        // eslint-disable-next-line prefer-promise-reject-errors
+        return Promise.reject(`Ошибка ${res.status}`);
+      });
+  }
+
   addCard(data) {
     return fetch(`https://mesto.nomoreparties.co/v1/${this._groupId}/cards`, {
       method: 'POST',
