@@ -2,10 +2,11 @@
 /* eslint-disable no-underscore-dangle */
 export default class Card {
   constructor(card, template, userId, handleCardClick, handleCardDelete) {
+    this._card = card;
     this.name = card.name;
     this.link = card.link;
     this._userId = userId;
-    this._cardId = card._id;
+    this.cardId = card._id;
     this.owner = card.owner;
     this._countLikes = card.likes;
     this.template = template;
@@ -56,7 +57,7 @@ export default class Card {
     evt.target.classList.toggle('element__like_active');
   }
 
-  _handleRemoveCard() {
+  handleRemoveCard() {
     this._cardElement.remove();
   }
 
@@ -68,7 +69,7 @@ export default class Card {
 
   _handleDeleteCard() {
     this._cardElement.querySelector('.element__delete').addEventListener('click', () => {
-      this._handleCardDelete(this._cardId);
+      this._handleCardDelete(this);
     });
   }
 
@@ -76,9 +77,5 @@ export default class Card {
     this._cardElement.querySelector('.element__like').addEventListener('click', this._handleLike);
     this._handleOpenFullScreen();
     this._handleDeleteCard();
-  }
-
-  getIdCard() {
-    return this._cardElement._id;
   }
 }

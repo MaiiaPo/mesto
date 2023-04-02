@@ -61,7 +61,7 @@ Promise.all([api.getInitialCards(), api.getUserData()])
     defaultCardList.renderItems(cardsArray, true);
   })
   .catch((err) => {
-    console.err(err);
+    console.error(err);
   });
 
 /**
@@ -71,16 +71,18 @@ const openFullScreen = (name, link) => {
   popupCardImg.open(name, link);
 };
 
-const openConfirm = (cardId) => {
+const openConfirm = (card) => {
   popupDeleteCardConfirm.open();
+
   popupDeleteCardConfirm.submitAction(() => {
     // eslint-disable-next-line no-underscore-dangle
-    api.removeCard(cardId)
+    api.removeCard(card.cardId)
       .then((res) => {
+        card.handleRemoveCard();
         popupDeleteCardConfirm.close();
       })
       .catch((err) => {
-        console.err(err);
+        console.error(err);
       });
   });
 };
@@ -95,7 +97,7 @@ const saveProfilePopup = (values) => {
       popupProfileForm.close();
     })
     .catch((err) => {
-      console.err(err);
+      console.error(err);
     });
 };
 
@@ -112,7 +114,7 @@ const saveAddNewCard = (values) => {
       popupAddCardForm.close();
     })
     .catch((err) => {
-      console.err(err);
+      console.error(err);
     });
 };
 
