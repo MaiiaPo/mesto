@@ -32,7 +32,7 @@ let userId = '';
  * Создание карточки
  */
 const createCard = (item, selector) => {
-  const card = new Card(item, selector, userId, openFullScreen, openConfirm, setLike);
+  const card = new Card(item, selector, userId, openFullScreen, openConfirm, setLike, deleteLike);
   return card.createCard();
 };
 
@@ -94,6 +94,17 @@ const openConfirm = (card) => {
  */
 const setLike = (card) => {
   api.addLike(card.cardId)
+    .then((res) => {
+      card.updateLikes(res);
+    })
+    .catch((err) => console.error(err));
+};
+
+/**
+ * Удаление лайка
+ */
+const deleteLike = (card) => {
+  api.removeLike(card.cardId)
     .then((res) => {
       card.updateLikes(res);
     })

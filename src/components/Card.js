@@ -1,7 +1,15 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-underscore-dangle */
 export default class Card {
-  constructor(card, template, userId, handleCardClick, handleCardDelete, handleSetLike) {
+  constructor(
+    card,
+    template,
+    userId,
+    handleCardClick,
+    handleCardDelete,
+    handleSetLike,
+    handleDeleteLike,
+  ) {
     this._card = card;
     this.name = card.name;
     this.link = card.link;
@@ -13,7 +21,9 @@ export default class Card {
     this._handleCardClick = handleCardClick;
     this._handleCardDelete = handleCardDelete;
     this._handleSetLike = handleSetLike;
+    this._handleDeleteLike = handleDeleteLike;
     this._cardElement = this._getTemplate();
+    this._likeElement = this._cardElement.querySelector('.element__like');
   }
 
   _getTemplate() {
@@ -53,12 +63,12 @@ export default class Card {
     }
   }
 
-  _handleLike(evt) {
-    evt.target.classList.toggle('element__like_active');
-  }
-
   _setLikes() {
-    console.log(this._likes.length);
+    if (this._hasMyLike()) {
+      this._likeElement.classList.add('element__like_active');
+    } else {
+      this._likeElement.classList.remove('element__like_active');
+    }
     this._cardElement.querySelector('.element__count').textContent = this._likes.length;
   }
 
@@ -79,9 +89,12 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._cardElement.querySelector('.element__like').addEventListener('click', (evt) => {
-      this._handleLike(evt);
-      this._handleSetLike(this);
+    this._likeElement.addEventListener('click', () => {
+      if (!this._hasMyLike()) {
+        this._handleSetLike(this);
+      } else {
+        this._handleDeleteLike(this);
+      }
     });
     this._handleOpenFullScreen();
     this._handleDeleteCard();
@@ -90,5 +103,10 @@ export default class Card {
   updateLikes(data) {
     this._likes = data.likes;
     this._setLikes();
+  }
+
+  _hasMyLike() {
+    if (this._likes.some((like) => like._id === this._userId)) return true;
+    return false;
   }
 }
