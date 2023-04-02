@@ -18,6 +18,7 @@ import {
   formProfileInputDescription,
   buttonOpenFormAddCard,
 } from '../utils/constants.js';
+import PopupConfirm from '../components/PopupConfirm';
 
 const profileFormValidate = new FormValidator(document.forms.profile, settingsValidation);
 const addCardFormValidate = new FormValidator(document.forms.place, settingsValidation);
@@ -70,8 +71,18 @@ const openFullScreen = (name, link) => {
   popupCardImg.open(name, link);
 };
 
-const openConfirm = () => {
+const openConfirm = (cardId) => {
   popupDeleteCardConfirm.open();
+  popupDeleteCardConfirm.submitAction(() => {
+    // eslint-disable-next-line no-underscore-dangle
+    api.removeCard(cardId)
+      .then((res) => {
+        popupDeleteCardConfirm.close();
+      })
+      .catch((err) => {
+        console.err(err);
+      });
+  });
 };
 
 /**
@@ -105,13 +116,9 @@ const saveAddNewCard = (values) => {
     });
 };
 
-const deleteCard = () => {
-  popupDeleteCardConfirm.close();
-};
-
 const popupProfileForm = new PopupWithForm('.popup_type_edit', saveProfilePopup);
 const popupAddCardForm = new PopupWithForm('.popup_type_add', saveAddNewCard);
-const popupDeleteCardConfirm = new PopupWithForm('.popup_type_confirm', deleteCard);
+const popupDeleteCardConfirm = new PopupConfirm('.popup_type_confirm');
 
 const popupCardImg = new PopupWithImage('.popup_image');
 

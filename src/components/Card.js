@@ -5,6 +5,7 @@ export default class Card {
     this.name = card.name;
     this.link = card.link;
     this._userId = userId;
+    this._cardId = card._id;
     this.owner = card.owner;
     this._countLikes = card.likes;
     this.template = template;
@@ -67,7 +68,7 @@ export default class Card {
 
   _handleDeleteCard() {
     this._cardElement.querySelector('.element__delete').addEventListener('click', () => {
-      this._handleCardDelete();
+      this._handleCardDelete(this._cardId);
     });
   }
 
@@ -75,5 +76,9 @@ export default class Card {
     this._cardElement.querySelector('.element__like').addEventListener('click', this._handleLike);
     this._handleOpenFullScreen();
     this._handleDeleteCard();
+  }
+
+  getIdCard() {
+    return this._cardElement._id;
   }
 }

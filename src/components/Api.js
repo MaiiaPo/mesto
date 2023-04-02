@@ -68,4 +68,17 @@ export default class Api {
       return Promise.reject(`Ошибка ${res.status}`);
     });
   }
+
+  removeCard(cardId) {
+    return fetch(`https://mesto.nomoreparties.co/v1/${this._groupId}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._token,
+      },
+    }).then((res) => {
+      if (res.ok) return res.json();
+      // eslint-disable-next-line prefer-promise-reject-errors
+      return Promise.reject(`Ошибка ${res.status}`);
+    });
+  }
 }
