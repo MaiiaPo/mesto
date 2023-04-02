@@ -25,12 +25,13 @@ const addCardFormValidate = new FormValidator(document.forms.place, settingsVali
 const userInfo = new UserInfo(profileName, profileDescription);
 
 const api = new Api('2966f134-ddf9-4ef6-92e6-3cc74f9bff8f', 'cohort-62');
+let userId = '';
 
 /**
  * Создание карточки
  */
 const createCard = (item, selector) => {
-  const card = new Card(item, selector, openFullScreen, openConfirm);
+  const card = new Card(item, selector, userId, openFullScreen, openConfirm);
   return card.createCard();
 };
 
@@ -53,6 +54,8 @@ const defaultCardList = new Section(
  */
 Promise.all([api.getInitialCards(), api.getUserData()])
   .then(([cardsArray, userData]) => {
+    // eslint-disable-next-line no-underscore-dangle
+    userId = userData._id;
     userInfo.setUserInfo(userData.name, userData.about);
     defaultCardList.renderItems(cardsArray, true);
   })

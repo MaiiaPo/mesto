@@ -1,9 +1,11 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-underscore-dangle */
 export default class Card {
-  constructor(card, template, handleCardClick, handleCardDelete) {
+  constructor(card, template, userId, handleCardClick, handleCardDelete) {
     this.name = card.name;
     this.link = card.link;
+    this._userId = userId;
+    this.owner = card.owner;
     this._countLikes = card.likes;
     this.template = template;
     this._handleCardClick = handleCardClick;
@@ -26,6 +28,8 @@ export default class Card {
     const title = this._cardElement.querySelector('.element__title');
     const likeCounter = this._cardElement.querySelector('.element__count');
 
+    this._visibleDelete();
+
     img.src = this.link;
     img.alt = this.name;
     title.textContent = this.name;
@@ -34,6 +38,17 @@ export default class Card {
     this._setEventListeners();
 
     return this._cardElement;
+  }
+
+  /**
+   * Устанавливает видимость для иконки удаления.
+   * Удалять карточки может только владелец.
+   */
+  _visibleDelete() {
+    const deleteIcon = this._cardElement.querySelector('.element__delete');
+    if (this.owner._id !== this._userId) {
+      deleteIcon.style.display = 'none';
+    }
   }
 
   _handleLike(evt) {
