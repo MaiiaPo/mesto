@@ -32,7 +32,7 @@ let userId = '';
  * Создание карточки
  */
 const createCard = (item, selector) => {
-  const card = new Card(item, selector, userId, openFullScreen, openConfirm);
+  const card = new Card(item, selector, userId, openFullScreen, openConfirm, setLike);
   return card.createCard();
 };
 
@@ -71,13 +71,15 @@ const openFullScreen = (name, link) => {
   popupCardImg.open(name, link);
 };
 
+/**
+ * Открытие окна предупреждения об удалении
+ * */
 const openConfirm = (card) => {
   popupDeleteCardConfirm.open();
-
   popupDeleteCardConfirm.submitAction(() => {
     // eslint-disable-next-line no-underscore-dangle
     api.removeCard(card.cardId)
-      .then((res) => {
+      .then(() => {
         card.handleRemoveCard();
         popupDeleteCardConfirm.close();
       })
@@ -88,12 +90,23 @@ const openConfirm = (card) => {
 };
 
 /**
+ * Установка лайка
+ */
+const setLike = (card) => {
+  api.addLike(card.cardId)
+    .then((res) => {
+      card.updateLikes(res);
+    })
+    .catch((err) => console.error(err));
+};
+
+/**
  * Сохраняем новые значения профиля
  */
 const saveProfilePopup = (values) => {
   userInfo.setUserInfo(values.name, values.description);
   api.updateUserData(values)
-    .then((res) => {
+    .then(() => {
       popupProfileForm.close();
     })
     .catch((err) => {

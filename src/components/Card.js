@@ -1,17 +1,18 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-underscore-dangle */
 export default class Card {
-  constructor(card, template, userId, handleCardClick, handleCardDelete) {
+  constructor(card, template, userId, handleCardClick, handleCardDelete, handleSetLike) {
     this._card = card;
     this.name = card.name;
     this.link = card.link;
     this._userId = userId;
     this.cardId = card._id;
     this.owner = card.owner;
-    this._countLikes = card.likes;
+    this._likes = card.likes;
     this.template = template;
     this._handleCardClick = handleCardClick;
     this._handleCardDelete = handleCardDelete;
+    this._handleSetLike = handleSetLike;
     this._cardElement = this._getTemplate();
   }
 
@@ -28,14 +29,13 @@ export default class Card {
   createCard() {
     const img = this._cardElement.querySelector('.element__image');
     const title = this._cardElement.querySelector('.element__title');
-    const likeCounter = this._cardElement.querySelector('.element__count');
 
     this._visibleDelete();
 
     img.src = this.link;
     img.alt = this.name;
     title.textContent = this.name;
-    likeCounter.textContent = this._countLikes.length;
+    this._setLikes();
 
     this._setEventListeners();
 
@@ -57,6 +57,11 @@ export default class Card {
     evt.target.classList.toggle('element__like_active');
   }
 
+  _setLikes() {
+    console.log(this._likes.length);
+    this._cardElement.querySelector('.element__count').textContent = this._likes.length;
+  }
+
   handleRemoveCard() {
     this._cardElement.remove();
   }
@@ -74,8 +79,16 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._cardElement.querySelector('.element__like').addEventListener('click', this._handleLike);
+    this._cardElement.querySelector('.element__like').addEventListener('click', (evt) => {
+      this._handleLike(evt);
+      this._handleSetLike(this);
+    });
     this._handleOpenFullScreen();
     this._handleDeleteCard();
+  }
+
+  updateLikes(data) {
+    this._likes = data.likes;
+    this._setLikes();
   }
 }

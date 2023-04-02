@@ -81,4 +81,17 @@ export default class Api {
       return Promise.reject(`Ошибка ${res.status}`);
     });
   }
+
+  addLike(cardId) {
+    return fetch(`https://mesto.nomoreparties.co/v1/${this._groupId}/cards/likes/${cardId}`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._token,
+      },
+    }).then((res) => {
+      if (res.ok) return res.json();
+      // eslint-disable-next-line prefer-promise-reject-errors
+      return Promise.reject(`Ошибка ${res.status}`);
+    });
+  }
 }
