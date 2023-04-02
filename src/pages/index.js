@@ -30,7 +30,7 @@ const api = new Api('2966f134-ddf9-4ef6-92e6-3cc74f9bff8f', 'cohort-62');
  * Создание карточки
  */
 const createCard = (item, selector) => {
-  const card = new Card(item, selector, openFullScreen);
+  const card = new Card(item, selector, openFullScreen, openConfirm);
   return card.createCard();
 };
 
@@ -53,7 +53,6 @@ const defaultCardList = new Section(
  */
 Promise.all([api.getInitialCards(), api.getUserData()])
   .then(([cardsArray, userData]) => {
-    console.log(cardsArray);
     userInfo.setUserInfo(userData.name, userData.about);
     defaultCardList.renderItems(cardsArray, true);
   })
@@ -66,6 +65,10 @@ Promise.all([api.getInitialCards(), api.getUserData()])
  */
 const openFullScreen = (name, link) => {
   popupCardImg.open(name, link);
+};
+
+const openConfirm = () => {
+  popupDeleteCardConfirm.open();
 };
 
 /**
@@ -99,12 +102,19 @@ const saveAddNewCard = (values) => {
     });
 };
 
+const deleteCard = () => {
+  popupDeleteCardConfirm.close();
+};
+
 const popupProfileForm = new PopupWithForm('.popup_type_edit', saveProfilePopup);
 const popupAddCardForm = new PopupWithForm('.popup_type_add', saveAddNewCard);
+const popupDeleteCardConfirm = new PopupWithForm('.popup_type_confirm', deleteCard);
+
 const popupCardImg = new PopupWithImage('.popup_image');
 
 popupProfileForm.setEventListeners();
 popupAddCardForm.setEventListeners();
+popupDeleteCardConfirm.setEventListeners();
 popupCardImg.setEventListeners();
 
 const openPopupEditProfile = () => {

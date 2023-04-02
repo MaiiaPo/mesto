@@ -1,12 +1,13 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-underscore-dangle */
 export default class Card {
-  constructor(card, template, handleCardClick) {
+  constructor(card, template, handleCardClick, handleCardDelete) {
     this.name = card.name;
     this.link = card.link;
     this._countLikes = card.likes;
     this.template = template;
     this._handleCardClick = handleCardClick;
+    this._handleCardDelete = handleCardDelete;
     this._cardElement = this._getTemplate();
   }
 
@@ -49,11 +50,15 @@ export default class Card {
     });
   }
 
+  _handleDeleteCard() {
+    this._cardElement.querySelector('.element__delete').addEventListener('click', () => {
+      this._handleCardDelete();
+    });
+  }
+
   _setEventListeners() {
     this._cardElement.querySelector('.element__like').addEventListener('click', this._handleLike);
-    this._cardElement.querySelector('.element__delete').addEventListener('click', () => {
-      this._handleRemoveCard();
-    });
     this._handleOpenFullScreen();
+    this._handleDeleteCard();
   }
 }
