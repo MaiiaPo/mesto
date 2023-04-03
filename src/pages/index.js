@@ -30,6 +30,7 @@ let userId = '';
  * Изменение аватара пользователя
  */
 const saveProfileAvatar = (values) => {
+  popupProfileEditAvatarForm.loading(true);
   api.editAvatar(values['avatar-link'])
     .then(() => {
       popupProfileEditAvatarForm.close();
@@ -37,6 +38,9 @@ const saveProfileAvatar = (values) => {
     })
     .catch((err) => {
       console.error(err);
+    })
+    .finally(() => {
+      popupProfileEditAvatarForm.loading(false);
     });
 };
 
@@ -45,13 +49,36 @@ const saveProfileAvatar = (values) => {
  */
 const saveProfilePopup = (values) => {
   userInfo.setUserInfo({ name: values.name, description: values.description });
+  popupProfileForm.loading(true);
   api.updateUserData(values)
     .then(() => {
       popupProfileForm.close();
     })
     .catch((err) => {
       console.error(err);
-    });
+    })
+    .finally(() => popupProfileForm.loading(false));
+};
+
+/**
+ * Добавление новой карточки
+ */
+const saveAddNewCard = (values) => {
+  const newCard = {
+    name: values['name-place'],
+    link: values.link,
+  };
+  popupAddCardForm.loading(true);
+
+  api.addCard(newCard)
+    .then((dataCard) => {
+      defaultCardList.renderItems([dataCard], false);
+      popupAddCardForm.close();
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => popupAddCardForm.loading(false));
 };
 
 const profileFormValidate = new FormValidator(document.forms.profile, settingsValidation);
@@ -151,25 +178,6 @@ const deleteLike = (card) => {
       card.updateLikes(res);
     })
     .catch((err) => console.error(err));
-};
-
-/**
- * Добавление новой карточки
- */
-const saveAddNewCard = (values) => {
-  const newCard = {
-    name: values['name-place'],
-    link: values.link,
-  };
-
-  api.addCard(newCard)
-    .then((dataCard) => {
-      defaultCardList.renderItems([dataCard], false);
-      popupAddCardForm.close();
-    })
-    .catch((err) => {
-      console.error(err);
-    });
 };
 
 const openPopupEditProfile = () => {

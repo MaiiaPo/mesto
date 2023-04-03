@@ -26,6 +26,7 @@ export default class Card {
     this._likeElement = this._cardElement.querySelector('.element__like');
   }
 
+  /** Приватные методы */
   _getTemplate() {
     const cardElement = document
       .querySelector(this.template)
@@ -34,22 +35,6 @@ export default class Card {
       .cloneNode(true);
 
     return cardElement;
-  }
-
-  createCard() {
-    const img = this._cardElement.querySelector('.element__image');
-    const title = this._cardElement.querySelector('.element__title');
-
-    this._visibleDelete();
-
-    img.src = this.link;
-    img.alt = this.name;
-    title.textContent = this.name;
-    this._setLikes();
-
-    this._setEventListeners();
-
-    return this._cardElement;
   }
 
   /**
@@ -70,10 +55,6 @@ export default class Card {
       this._likeElement.classList.remove('element__like_active');
     }
     this._cardElement.querySelector('.element__count').textContent = this._likes.length;
-  }
-
-  handleRemoveCard() {
-    this._cardElement.remove();
   }
 
   _handleOpenFullScreen() {
@@ -100,13 +81,34 @@ export default class Card {
     this._handleDeleteCard();
   }
 
+  _hasMyLike() {
+    if (this._likes.some((like) => like._id === this._userId)) return true;
+    return false;
+  }
+
+  /** Публичные методы */
+  createCard() {
+    const img = this._cardElement.querySelector('.element__image');
+    const title = this._cardElement.querySelector('.element__title');
+
+    this._visibleDelete();
+
+    img.src = this.link;
+    img.alt = this.name;
+    title.textContent = this.name;
+    this._setLikes();
+
+    this._setEventListeners();
+
+    return this._cardElement;
+  }
+
   updateLikes(data) {
     this._likes = data.likes;
     this._setLikes();
   }
 
-  _hasMyLike() {
-    if (this._likes.some((like) => like._id === this._userId)) return true;
-    return false;
+  handleRemoveCard() {
+    this._cardElement.remove();
   }
 }
