@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable import/extensions */
 import './index.css';
 import Card from '../components/Card.js';
@@ -61,6 +62,14 @@ const saveProfilePopup = (values) => {
 };
 
 /**
+ * Создание карточки
+ */
+const createCard = (item, selector) => {
+  const card = new Card(item, selector, userId, openFullScreen, openConfirm, setLike, deleteLike);
+  return card.createCard();
+};
+
+/**
  * Добавление новой карточки
  */
 const saveAddNewCard = (values) => {
@@ -72,7 +81,8 @@ const saveAddNewCard = (values) => {
 
   api.addCard(newCard)
     .then((dataCard) => {
-      defaultCardList.renderItems([dataCard], false);
+      const addedCard = createCard(dataCard, '#element');
+      defaultCardList.setItem(addedCard, false);
       popupAddCardForm.close();
     })
     .catch((err) => {
@@ -83,6 +93,7 @@ const saveAddNewCard = (values) => {
 
 const profileFormValidate = new FormValidator(document.forms.profile, settingsValidation);
 const addCardFormValidate = new FormValidator(document.forms.place, settingsValidation);
+const editAvatarFormValidate = new FormValidator(document.forms['edit-avatar'], settingsValidation);
 
 const popupProfileForm = new PopupWithForm('.popup_type_edit', saveProfilePopup);
 const popupProfileEditAvatarForm = new PopupWithForm('.popup_type_edit-avatar', saveProfileAvatar);
@@ -95,14 +106,6 @@ popupProfileEditAvatarForm.setEventListeners();
 popupAddCardForm.setEventListeners();
 popupDeleteCardConfirm.setEventListeners();
 popupCardImg.setEventListeners();
-
-/**
- * Создание карточки
- */
-const createCard = (item, selector) => {
-  const card = new Card(item, selector, userId, openFullScreen, openConfirm, setLike, deleteLike);
-  return card.createCard();
-};
 
 /**
  * Отрисовка карточек на странице
@@ -196,4 +199,8 @@ buttonOpenFormAddCard.addEventListener('click', () => {
   addCardFormValidate.clearErrors();
   popupAddCardForm.open();
 });
-profileAvatar.addEventListener('click', () => { popupProfileEditAvatarForm.open(); });
+profileAvatar.addEventListener('click', () => {
+  editAvatarFormValidate.disabledButton();
+  editAvatarFormValidate.clearErrors();
+  popupProfileEditAvatarForm.open();
+});

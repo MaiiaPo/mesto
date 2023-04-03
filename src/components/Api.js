@@ -1,8 +1,15 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable no-underscore-dangle */
 export default class Api {
   constructor(token, groupId) {
     this._token = token;
     this._groupId = groupId;
+  }
+
+  _response(res) {
+    if (res.ok) return res.json();
+    // eslint-disable-next-line prefer-promise-reject-errors
+    return Promise.reject(`Ошибка ${res.status}`);
   }
 
   // Получение существующих карточек с сервера
@@ -12,11 +19,7 @@ export default class Api {
         authorization: this._token,
       },
     })
-      .then((res) => {
-        if (res.ok) return res.json();
-        // eslint-disable-next-line prefer-promise-reject-errors
-        return Promise.reject(`Ошибка ${res.status}`);
-      });
+      .then((res) => this._response(res));
   }
 
   getUserData() {
@@ -25,11 +28,7 @@ export default class Api {
         authorization: this._token,
       },
     })
-      .then((res) => {
-        if (res.ok) return res.json();
-        // eslint-disable-next-line prefer-promise-reject-errors
-        return Promise.reject(`Ошибка ${res.status}`);
-      });
+      .then((res) => this._response(res));
   }
 
   updateUserData(userData) {
@@ -44,11 +43,7 @@ export default class Api {
         about: userData.description,
       }),
     })
-      .then((res) => {
-        if (res.ok) return res.json();
-        // eslint-disable-next-line prefer-promise-reject-errors
-        return Promise.reject(`Ошибка ${res.status}`);
-      });
+      .then((res) => this._response(res));
   }
 
   editAvatar(link) {
@@ -62,11 +57,7 @@ export default class Api {
         avatar: link,
       }),
     })
-      .then((res) => {
-        if (res.ok) return res.json();
-        // eslint-disable-next-line prefer-promise-reject-errors
-        return Promise.reject(`Ошибка ${res.status}`);
-      });
+      .then((res) => this._response(res));
   }
 
   addCard(data) {
@@ -80,11 +71,7 @@ export default class Api {
         name: data.name,
         link: data.link,
       }),
-    }).then((res) => {
-      if (res.ok) return res.json();
-      // eslint-disable-next-line prefer-promise-reject-errors
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+    }).then((res) => this._response(res));
   }
 
   removeCard(cardId) {
@@ -93,11 +80,7 @@ export default class Api {
       headers: {
         authorization: this._token,
       },
-    }).then((res) => {
-      if (res.ok) return res.json();
-      // eslint-disable-next-line prefer-promise-reject-errors
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+    }).then((res) => this._response(res));
   }
 
   addLike(cardId) {
@@ -106,11 +89,7 @@ export default class Api {
       headers: {
         authorization: this._token,
       },
-    }).then((res) => {
-      if (res.ok) return res.json();
-      // eslint-disable-next-line prefer-promise-reject-errors
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+    }).then((res) => this._response(res));
   }
 
   removeLike(cardId) {
@@ -119,10 +98,6 @@ export default class Api {
       headers: {
         authorization: this._token,
       },
-    }).then((res) => {
-      if (res.ok) return res.json();
-      // eslint-disable-next-line prefer-promise-reject-errors
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+    }).then((res) => this._response(res));
   }
 }
